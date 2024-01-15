@@ -7,6 +7,7 @@ export const registerFormValidation = async (
   formError: RegisterFormError,
   setFormError: React.Dispatch<React.SetStateAction<RegisterFormError>>
 ): Promise<boolean> => {
+  return true;
   switch (stage) {
     case 1:
       let nameAndSurnameRegex: RegExp = /^[a-zA-Z]+(?:[ -][a-zA-Z]+)*$/;
