@@ -1,4 +1,9 @@
-import { RegisterFormData, RegisterFormError } from "../../types";
+import {
+  LoginFormData,
+  LoginFormError,
+  RegisterFormData,
+  RegisterFormError,
+} from "../../types";
 import authService from "../api/services/AuthService";
 
 export const registerFormValidation = async (
@@ -7,7 +12,6 @@ export const registerFormValidation = async (
   formError: RegisterFormError,
   setFormError: React.Dispatch<React.SetStateAction<RegisterFormError>>
 ): Promise<boolean> => {
-  return true;
   switch (stage) {
     case 1:
       let nameAndSurnameRegex: RegExp = /^[a-zA-Z]+(?:[ -][a-zA-Z]+)*$/;
@@ -81,4 +85,33 @@ export const registerFormValidation = async (
       return birthDateCorrect && domicileCorrect;
   }
   return true;
+};
+
+export const loginFormValidation = async (
+  formData: LoginFormData,
+  formError: LoginFormError,
+  setFormError: React.Dispatch<React.SetStateAction<LoginFormError>>
+): Promise<boolean> => {
+  if (formData.email !== "") {
+    if (await authService.EmailIsTaken(formData.email)) {
+      setFormError({
+        ...formError,
+        emailError: "",
+      });
+
+      return true;
+    } else {
+      setFormError({
+        ...formError,
+        emailError: "Niepoprawny adres email!",
+      });
+      return false;
+    }
+  } else {
+    setFormError({
+      ...formError,
+      emailError: "Niepoprawny adres email!",
+    });
+    return false;
+  }
 };

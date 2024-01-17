@@ -26,6 +26,11 @@ export interface RegisterFormError {
   domicileError: string;
 }
 
+export interface LoginFormError {
+  emailError: string;
+  passwordError: string;
+}
+
 export interface ImageUploadFields {
   imageSrc: any;
   imageFile: File | null;

@@ -13,7 +13,7 @@ class AuthService {
     this.baseURL = baseURL;
   }
 
-  Login = async (formData: LoginFormData): Promise<void> => {
+  Login = async (formData: LoginFormData): Promise<boolean> => {
     try {
       await axios.post(`${this.baseURL}/login`, formData, {
         headers: {
@@ -21,8 +21,9 @@ class AuthService {
         },
         withCredentials: true,
       });
+      return true;
     } catch (error) {
-      throw error;
+      return false;
     }
   };
 

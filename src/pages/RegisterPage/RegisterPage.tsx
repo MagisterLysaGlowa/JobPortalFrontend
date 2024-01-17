@@ -382,11 +382,11 @@ const RegisterPage: React.FC = () => {
             <img
               src={imageData.imageSrc}
               alt="user avatar"
-              className="w-[250px] h-[250px] rounded-full"
+              className="w-[200px] h-[200px] rounded-full"
             />
             <div
               {...getRootProps()}
-              className={`absolute w-[250px] h-[250px] rounded-full flex justify-center items-center hover:bg-green-500/50  transition-colors duration-500 cursor-pointer group ${
+              className={`absolute w-[200px] h-[200px] rounded-full flex justify-center items-center hover:bg-green-500/50  transition-colors duration-500 cursor-pointer group ${
                 isDragActive && "bg-blue-500/50"
               }`}
               id="upload--file--wrapper"
@@ -401,7 +401,7 @@ const RegisterPage: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-row gap-8 mt-5">
             <button
               type="button"
               onClick={handlePreviousStageClick}
@@ -425,8 +425,18 @@ const RegisterPage: React.FC = () => {
       currentFormRender = (
         <>
           <h1>{formData.avatarSource}</h1>
-          <button type="submit">Zarejestruj się</button>
-          <button onClick={handlePreviousStageClick}>Poprzedni krok</button>
+          <button
+            type="submit"
+            className="bg-main-second text-white font-bold text-xl h-16 rounded-lg shadow-md mt-8"
+          >
+            Zarejestruj się
+          </button>
+          <button
+            onClick={handlePreviousStageClick}
+            className="bg-main-second text-white font-bold text-xl h-16 rounded-lg shadow-md mt-8"
+          >
+            Poprzedni krok
+          </button>
         </>
       );
       break;
@@ -442,8 +452,8 @@ const RegisterPage: React.FC = () => {
   return (
     <>
       <div className="flex items-center justify-center mt-32">
-        <section className="grid grid-cols-2 bg-main-light w-full max-w-[1100px] rounded-[40px] z-20 shadow-md">
-          <div className="rounded-l-lg flex items-center justify-center py-8 pl-8">
+        <section className="grid grid-cols-1 md:grid-cols-2 bg-main-light w-full max-w-[1100px] rounded-[40px] z-20 shadow-md mx-2 xl:mx-0">
+          <div className="rounded-l-lg hidden items-center justify-center py-8 pl-8 md:flex">
             <img
               src={register_banner}
               alt="register banner"
@@ -451,8 +461,8 @@ const RegisterPage: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-col justify-center">
-            <header className="text-center text-5xl font-bold text-main-third tracking-widest">
+          <div className="flex flex-col justify-center min-h-[550px]">
+            <header className="text-center text-4xl lg:text-5xl font-bold text-main-third tracking-widest">
               Zarejestruj się
             </header>
             <div className="px-8">

@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 
 const App: React.FC = () => {
   return (
-    <main className="relative">
+    <main className="relative overflow-hidden">
       <Navbar />
       <Outlet />
     </main>
