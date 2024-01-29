@@ -1,104 +1,21 @@
+import React from "react";
 import {
-  faBriefcase,
   faHouseLaptop,
   faLocationDot,
   faNewspaper,
-  faUnlock,
-  faUser,
-  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
-import authService from "../../api/services/AuthService";
-import test_img from "../../assets/register_banner.jpg";
-import CarouselHomePage from "../../components/CarouselCustom/CarouselHomePage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+type Props = {};
 
-const HomePage: React.FC = () => {
+const ApplicationsPage = (props: Props) => {
   return (
     <>
-      <div className="flex items-center flex-col ">
-        <div className="max-w-[1000px] h-[300px] md:h-[600px] mt-8">
-          <CarouselHomePage />
-        </div>
-
-        <div className="w-full max-w-[1600px] gap-10 mt-8 flex flex-col 2xl:flex-row lg:px-8">
-          <div className="w-full 2xl:w-1/4 bg-main-dark h-[400px] rounded-3xl shadow-md flex flex-col justify-center">
-            <FontAwesomeIcon
-              icon={faUser}
-              className="text-6xl text-main-third"
-            />
-            <h1 className="text-center font-bold text-4xl mt-4 text-main-third">
-              Header lorem
-            </h1>
-            <p className="text-sm text-justify px-8 text-gray-900 mt-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laudantium aperiam accusantium maxime cupiditate nisi repellat?
-              Facere laudantium ea excepturi aut totam qui.?
-            </p>
-            <button className="bg-main-third h-14 w-[250px] place-self-end mt-4 mr-8 text-white font-bold text-xl rounded-xl">
-              Czytaj dalej
-            </button>
-          </div>
-
-          <div className="w-full 2xl:w-1/4 bg-main-dark h-[400px] rounded-3xl shadow-md flex flex-col justify-center">
-            <FontAwesomeIcon
-              icon={faUnlock}
-              className="text-6xl text-main-third"
-            />
-            <h1 className="text-center font-bold text-4xl mt-4 text-main-third">
-              Header lorem
-            </h1>
-            <p className="text-sm text-justify px-8 text-gray-900 mt-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laudantium aperiam accusantium maxime cupiditate nisi repellat?
-              Facere laudantium ea excepturi aut totam qui.?
-            </p>
-            <button className="bg-main-third h-14 w-[250px] place-self-end mt-4 mr-8 text-white font-bold text-xl rounded-xl">
-              Czytaj dalej
-            </button>
-          </div>
-
-          <div className="w-full 2xl:w-1/4 bg-main-dark h-[400px] rounded-3xl shadow-md flex flex-col justify-center">
-            <FontAwesomeIcon
-              icon={faBriefcase}
-              className="text-6xl text-main-third"
-            />
-            <h1 className="text-center font-bold text-4xl mt-4 text-main-third">
-              Header lorem
-            </h1>
-            <p className="text-sm text-justify px-8 text-gray-900 mt-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laudantium aperiam accusantium maxime cupiditate nisi repellat?
-              Facere laudantium ea excepturi aut totam qui.?
-            </p>
-            <button className="bg-main-third h-14 w-[250px] place-self-end mt-4 mr-8 text-white font-bold text-xl rounded-xl">
-              Czytaj dalej
-            </button>
-          </div>
-
-          <div className="w-full 2xl:w-1/4 bg-main-dark h-[400px] rounded-3xl shadow-md flex flex-col justify-center">
-            <FontAwesomeIcon
-              icon={faWallet}
-              className="text-6xl text-main-third"
-            />
-            <h1 className="text-center font-bold text-4xl mt-4 text-main-third">
-              Header lorem
-            </h1>
-            <p className="text-sm text-justify px-8 text-gray-900 mt-4">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laudantium aperiam accusantium maxime cupiditate nisi repellat?
-              Facere laudantium ea excepturi aut totam qui.?
-            </p>
-            <button className="bg-main-third h-14 w-[250px] place-self-end mt-4 mr-8 text-white font-bold text-xl rounded-xl">
-              Czytaj dalej
-            </button>
-          </div>
-        </div>
-
-        <div className="bg-main-dark w-full max-w-[1600px] mt-20 rounded-xl shadow-md px-20 pb-20">
-          <h1 className="text-5xl font-bold my-8 text-main-second">
-            Najnowsze ogłoszenia
-          </h1>
-          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center">
+      <section className="flex flex-col items-center">
+        <h1 className="text-7xl text-main-third my-10 font-bold">
+          Aplikowane oferty
+        </h1>
+        <div className="flex flex-col items-center w-full max-w-[1600px] bg-main-dark px-12 py-24 rounded-3xl">
+          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center w-full">
             <div className="w-[200px] h-[200px]">
               <img
                 src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
@@ -132,16 +49,16 @@ const HomePage: React.FC = () => {
 
             <div className="flex flex-col justify-center mr-5 mb-4 xl:mb-0">
               <button className="w-[250px] bg-red-500 h-[60px] text-white rounded-xl font-bold text-2xl">
-                Aplikuj
+                Usuń aplikację
               </button>
 
               <button className="w-[250px] bg-green-500 h-[60px] text-white rounded-xl font-bold text-2xl mt-5">
-                Aplikuj
+                Dodaj do ulubionych
               </button>
             </div>
           </article>
 
-          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center mt-10">
+          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center mt-10 w-full">
             <div className="w-[200px] h-[200px]">
               <img
                 src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
@@ -175,16 +92,16 @@ const HomePage: React.FC = () => {
 
             <div className="flex flex-col justify-center mr-5 mb-4 xl:mb-0">
               <button className="w-[250px] bg-red-500 h-[60px] text-white rounded-xl font-bold text-2xl">
-                Aplikuj
+                Usuń aplikację
               </button>
 
               <button className="w-[250px] bg-green-500 h-[60px] text-white rounded-xl font-bold text-2xl mt-5">
-                Aplikuj
+                Dodaj do ulubionych
               </button>
             </div>
           </article>
 
-          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center mt-10">
+          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center mt-10 w-full">
             <div className="w-[200px] h-[200px]">
               <img
                 src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
@@ -218,16 +135,16 @@ const HomePage: React.FC = () => {
 
             <div className="flex flex-col justify-center mr-5 mb-4 xl:mb-0">
               <button className="w-[250px] bg-red-500 h-[60px] text-white rounded-xl font-bold text-2xl">
-                Aplikuj
+                Usuń aplikację
               </button>
 
               <button className="w-[250px] bg-green-500 h-[60px] text-white rounded-xl font-bold text-2xl mt-5">
-                Aplikuj
+                Dodaj do ulubionych
               </button>
             </div>
           </article>
         </div>
-      </div>
+      </section>
 
       <footer className="w-full bg-main-second h-[100px] mt-32 text-white flex justify-center flex-col px-8">
         <h2 className="text-xl">Kacper Piaskowy</h2>
@@ -237,4 +154,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default ApplicationsPage;

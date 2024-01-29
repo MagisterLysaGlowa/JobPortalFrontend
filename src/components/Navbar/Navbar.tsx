@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import authService from "../../api/services/AuthService";
+// import authService from "../../api/services/AuthService";
 
-const logout = async () => {
-  authService.Logout();
-};
+// const logout = async () => {
+//   authService.Logout();
+// };
 
 const Navbar: React.FC = () => {
   const [menuVisibility, setMenuVisibility] = useState<boolean>(false);
@@ -15,9 +15,9 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-main-second flex flex-row items-center justify-between h-16">
-      <h1 className="font-kanit font-bold text-white text-3xl ml-8">
+      <Link className="font-kanit font-bold text-white text-3xl ml-8" to="/">
         Joble.com
-      </h1>
+      </Link>
       <button
         onClick={handleMenuButtonClick}
         className={`mr-10 flex flex-col justify-evenly h-[45px]`}
@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
 
         <li className="mt-4 h-12 border-2 border-main-third text-main-third font-bold mx-10 rounded-xl cursor-pointer transition-all duration-500 hover:bg-main-third hover:text-white">
           <Link
-            to="/profile"
+            to="/applications"
             className="w-full text-center h-full flex justify-center items-center"
           >
             Aktualne aplikacje
@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
 
         <li className="mt-4 h-12 border-2 border-main-third text-main-third font-bold mx-10 rounded-xl cursor-pointer transition-all duration-500 hover:bg-main-third hover:text-white">
           <Link
-            to="/profile"
+            to="/favourite"
             className="w-full text-center h-full flex justify-center items-center"
           >
             Ulubione oferty
