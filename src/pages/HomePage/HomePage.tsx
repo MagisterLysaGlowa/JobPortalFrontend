@@ -74,7 +74,8 @@ const HomePage: React.FC = () => {
               Czytaj dalej
             </button>
           </div>
-
+          <h1>esa</h1>
+          <h1>esa</h1>
           <div className="w-full 2xl:w-1/4 bg-main-dark h-[400px] rounded-3xl shadow-md flex flex-col justify-center">
             <FontAwesomeIcon
               icon={faWallet}
