@@ -35,3 +35,61 @@ export interface ImageUploadFields {
   imageSrc: any;
   imageFile: File | null;
 }
+
+export interface CourseFormData {
+  courseName: string;
+  courseOrganizer: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface EducationFormData {
+  schoolName: string;
+  location: string;
+  educationLevel: string;
+  field: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface ExperienceFormData {
+  proffesion: string;
+  companyName: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface JobOfertFormData {
+  recruitmentEndDate: string;
+  positionName: string;
+  positionLevel: string;
+  employmentContract: string;
+  employmentType: string;
+  jobType: string;
+  salaryMinimum: number;
+  salaryMaximum: number;
+  workDays: string;
+  workStartHour: string;
+  workEndHour: string;
+}
+
+export interface CompanyFormData {
+  companyName: string;
+  companyAddress: string;
+  companyLocation: string;
+  companyDescription: string;
+}
+
+export interface FilterFormData {
+  positionName: string;
+  positionLevel: string;
+  employmentContract: string;
+  employmentType: string;
+  jobType: string;
+  salaryMinimum: number;
+  salaryMaximum: number;
+  companyName: string;
+  companyLocation: string;
+  categoryName: string;
+}

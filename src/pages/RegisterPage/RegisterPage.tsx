@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useState, useCallback } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import {
   ImageUploadFields,
   RegisterFormData,
@@ -12,8 +18,20 @@ import defaultImageSrc from "../../assets/user_placeholder.png";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowUp, faFolderPlus } from "@fortawesome/free-solid-svg-icons";
+import { User } from "../../api/models/user";
+import { useNavigate } from "react-router";
 
 const RegisterPage: React.FC = () => {
+  useEffect(() => {
+    const setup = async () => {
+      const user: User = await authService.Get();
+      if (user) {
+        navigate("/");
+      }
+    };
+    setup();
+  }, []);
+  const navigate = useNavigate();
   //* PROPERTIES INITALIZATION
   const [stage, setStage] = useState<number>(1);
   const [formData, setFormData] = useState<RegisterFormData>({
@@ -76,6 +94,7 @@ const RegisterPage: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await authService.Register(formData, imageData);
+    window.location.reload();
   };
 
   //* METHODS USED FOR NAVIGATION BETWEEN STAGES OF REGISTER

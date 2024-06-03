@@ -7,7 +7,7 @@ export const Context = React.createContext<any>({});
 
 const App: React.FC = () => {
   return (
-    <main className="relative overflow-hidden">
+    <main className="relative overflow-hidden min-h-[100vh]">
       <Navbar />
       <Outlet />
     </main>

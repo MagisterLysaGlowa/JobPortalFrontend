@@ -38,6 +38,7 @@ class AuthService {
           withCredentials: true,
         }
       );
+
       return response.data;
     } catch (error) {
       throw error;

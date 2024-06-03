@@ -1,12 +1,23 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./LoginPage.css";
 import { LoginFormData, LoginFormError } from "../../../types";
 import authService from "../../api/services/AuthService";
 import register_banner from "../../assets/register_banner.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginFormValidation } from "../../utils/validations";
+import { User } from "../../api/models/user";
 
 const LoginPage: React.FC = () => {
+  useEffect(() => {
+    const setup = async () => {
+      const user: User = await authService.Get();
+      if (user) {
+        navigate("/");
+      }
+    };
+    setup();
+  }, []);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -38,12 +49,16 @@ const LoginPage: React.FC = () => {
             ...formError,
             passwordError: "Niepoprawne hasło!",
           });
+
+      if (correct) {
+        window.location.reload();
+      }
     }
   };
 
   return (
     <div className="flex items-center justify-center mt-32">
-      <section className="grid grid-cols-1 md:grid-cols-2 bg-main-light w-full max-w-[1100px] rounded-[40px] z-20 shadow-md mx-2 xl:mx-0">
+      <section className="grid grid-cols-1 md:grid-cols-2 bg-white w-full max-w-[1100px] rounded-[40px] z-20 shadow-md mx-2 xl:mx-0">
         <div className="rounded-l-lg hidden items-center justify-center py-8 pl-8 md:flex">
           <img
             src={register_banner}
@@ -52,13 +67,13 @@ const LoginPage: React.FC = () => {
           />
         </div>
         <div className="flex flex-col justify-center min-h-[550px]">
-          <header className="text-center text-4xl lg:text-5xl font-bold text-main-third tracking-widest">
+          <header className="text-center text-4xl lg:text-5xl font-bold text-main-third tracking-widest ">
             Zaloguj się
           </header>
           <article className="flex justify-center mt-4">
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col px-8 py-4 max-w-[450px] flex-grow"
+              className="flex flex-col px-8 py-4 max-w-[450px] flex-grow bg-white rounded-xl"
             >
               <div className="flex flex-col flex-grow flex-shrink basis-1">
                 <label
@@ -74,7 +89,7 @@ const LoginPage: React.FC = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className={`h-16 rounded-lg pl-3 outline-none text-main-second shadow-md ${
+                  className={`h-16 rounded-lg pl-3 outline-none text-main-second shadow-md border-2 border-gray-300 ${
                     formError.emailError != "" &&
                     "!text-red-600 border-2 border-red-600 placeholder-red-600"
                   }`}
@@ -98,7 +113,7 @@ const LoginPage: React.FC = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={`h-16 rounded-lg pl-3 outline-none text-main-second shadow-md ${
+                  className={`h-16 rounded-lg pl-3 outline-none text-main-second shadow-md  border-2 border-gray-300 ${
                     formError.passwordError != "" &&
                     "!text-red-600 border-2 border-red-600 placeholder-red-600"
                   }`}
@@ -108,7 +123,7 @@ const LoginPage: React.FC = () => {
                 </p>
               </div>
 
-              <button className="bg-main-second text-white font-bold text-xl h-16 rounded-lg shadow-md mt-2">
+              <button className="bg-blue-600 text-white font-bold text-xl h-16 rounded-lg shadow-md mt-2">
                 Zaloguj się
               </button>
 

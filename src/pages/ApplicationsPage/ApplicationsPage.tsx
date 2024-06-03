@@ -1,156 +1,138 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { User } from "../../api/models/user";
+import authService from "../../api/services/AuthService";
+import { useNavigate } from "react-router";
+import { JobOfert } from "../../api/models/jobOfert";
+import userService from "../../api/services/UserService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faHouseLaptop,
+  faBriefcase,
+  faGraduationCap,
+  faLocationCrosshairs,
   faLocationDot,
   faNewspaper,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-type Props = {};
+import { Link } from "react-router-dom";
+import { Company } from "../../api/models/company";
+import jobOfertService from "../../api/services/JobOfertService";
 
-const ApplicationsPage = (props: Props) => {
+interface JobOfertForDisplay {
+  jobOfert: JobOfert;
+  company: Company;
+}
+
+const ApplicationsPage = () => {
+  const navigate = useNavigate();
+  const [jobOfertsForDisplay, setJobOfertsForDisplay] = useState<
+    JobOfertForDisplay[]
+  >([]);
+
+  useEffect(() => {
+    OnAppearing();
+  }, []);
+  const OnAppearing = async () => {
+    const user: User = await authService.Get();
+    if (user.userId == undefined) {
+      navigate("/login");
+    } else {
+      const applicationsResponse: JobOfert[] =
+        await userService.GetUserJobOfertApplications(user.userId);
+      reloadPage(applicationsResponse);
+    }
+  };
+
+  const reloadPage = async (applicationsDb: JobOfert[]) => {
+    setJobOfertsForDisplay([]);
+    applicationsDb.forEach(async (item) => {
+      let companyDb: Company = await jobOfertService.GetCompanyForJobOfertId(
+        item.id
+      );
+      let fullOfert: JobOfertForDisplay = {
+        jobOfert: item,
+        company: companyDb,
+      };
+
+      setJobOfertsForDisplay((prevJobOferts) => [...prevJobOferts, fullOfert]);
+    });
+  };
+
   return (
-    <>
-      <section className="flex flex-col items-center">
-        <h1 className="text-7xl text-main-third my-10 font-bold">
-          Aplikowane oferty
-        </h1>
-        <div className="flex flex-col items-center w-full max-w-[1600px] bg-main-dark px-12 py-24 rounded-3xl">
-          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center w-full">
-            <div className="w-[200px] h-[200px]">
-              <img
-                src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                alt="esa"
-                className="w-full h-full rounded-xl mt-4 xl:mt-0"
-              />
-            </div>
+    <section className="w-full flex justify-center">
+      <div className="max-w-[1300px] mt-20 w-full">
+        <div className="col-span-3 p-2">
+          {jobOfertsForDisplay.map((item, index) => {
+            return (
+              <Link
+                to={"/ofertPage"}
+                state={{ jobOfertId: item.jobOfert.id }}
+                className="bg-white rounded-xl grid my-6 px-8 py-6"
+                key={index}
+              >
+                <div className="flex items-center">
+                  <h1 className="font-bold text-3xl text-blue-600">
+                    {item.jobOfert.positionName}
+                  </h1>
+                </div>
+                <div className="flex flex-col lg:flex-row gap-5 mt-4">
+                  <div className="bg-[#f1f5f9] py-1 px-3 min-w-[100px] rounded-xl flex items-center">
+                    <FontAwesomeIcon
+                      icon={faBriefcase}
+                      className="text-lg text-green-300"
+                    />
+                    <h3 className="ml-2 text-green-300">
+                      {item.jobOfert.employmentType}
+                    </h3>
+                  </div>
 
-            <div className="flex flex-col ml-8 flex-grow">
-              <h1 className="text-4xl font-bold h-3/4 text-main-third pt-4">
-                Oferta pracy
-              </h1>
-              <div className="flex items-center">
-                <FontAwesomeIcon
-                  icon={faLocationDot}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Limanowa</span>
-                <FontAwesomeIcon
-                  icon={faHouseLaptop}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Zdalna</span>
-                <FontAwesomeIcon
-                  icon={faNewspaper}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Pełen etat</span>
-              </div>
-            </div>
+                  <div className="bg-[#f1f5f9] py-1 px-3 min-w-[100px] rounded-xl flex items-center">
+                    <FontAwesomeIcon
+                      icon={faNewspaper}
+                      className="text-lg text-red-300"
+                    />
+                    <h3 className="ml-2 text-red-300">
+                      {item.jobOfert.employmentContract}
+                    </h3>
+                  </div>
 
-            <div className="flex flex-col justify-center mr-5 mb-4 xl:mb-0">
-              <button className="w-[250px] bg-red-500 h-[60px] text-white rounded-xl font-bold text-2xl">
-                Usuń aplikację
-              </button>
+                  <div className="bg-[#f1f5f9] py-1 px-3 min-w-[100px] rounded-xl flex items-center">
+                    <FontAwesomeIcon
+                      icon={faLocationCrosshairs}
+                      className="text-lg text-purple-300"
+                    />
+                    <h3 className="ml-2 text-purple-300">
+                      {item.jobOfert.jobType}
+                    </h3>
+                  </div>
+                </div>
+                <h2 className="text-xl font-bold mt-2">
+                  {item.company.companyName} {item.company.companyAddress}
+                </h2>
 
-              <button className="w-[250px] bg-green-500 h-[60px] text-white rounded-xl font-bold text-2xl mt-5">
-                Dodaj do ulubionych
-              </button>
-            </div>
-          </article>
+                <div className="mt-2 flex items-center">
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    className="text-xl text-gray-600"
+                  />
+                  <h2 className="text-lg text-gray-600 ml-4">
+                    {item.company.companyLocation}
+                  </h2>
+                </div>
 
-          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center mt-10 w-full">
-            <div className="w-[200px] h-[200px]">
-              <img
-                src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                alt="esa"
-                className="w-full h-full rounded-xl mt-4 xl:mt-0"
-              />
-            </div>
-
-            <div className="flex flex-col ml-8 flex-grow">
-              <h1 className="text-4xl font-bold h-3/4 text-main-third pt-4">
-                Oferta pracy
-              </h1>
-              <div className="flex items-center">
-                <FontAwesomeIcon
-                  icon={faLocationDot}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Limanowa</span>
-                <FontAwesomeIcon
-                  icon={faHouseLaptop}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Zdalna</span>
-                <FontAwesomeIcon
-                  icon={faNewspaper}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Pełen etat</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-center mr-5 mb-4 xl:mb-0">
-              <button className="w-[250px] bg-red-500 h-[60px] text-white rounded-xl font-bold text-2xl">
-                Usuń aplikację
-              </button>
-
-              <button className="w-[250px] bg-green-500 h-[60px] text-white rounded-xl font-bold text-2xl mt-5">
-                Dodaj do ulubionych
-              </button>
-            </div>
-          </article>
-
-          <article className="bg-white rounded-xl flex flex-col xl:flex-row items-center mt-10 w-full">
-            <div className="w-[200px] h-[200px]">
-              <img
-                src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-                alt="esa"
-                className="w-full h-full rounded-xl mt-4 xl:mt-0"
-              />
-            </div>
-
-            <div className="flex flex-col ml-8 flex-grow">
-              <h1 className="text-4xl font-bold h-3/4 text-main-third pt-4">
-                Oferta pracy
-              </h1>
-              <div className="flex items-center">
-                <FontAwesomeIcon
-                  icon={faLocationDot}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Limanowa</span>
-                <FontAwesomeIcon
-                  icon={faHouseLaptop}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Zdalna</span>
-                <FontAwesomeIcon
-                  icon={faNewspaper}
-                  className="mr-1 ml-3 text-2xl text-main-third"
-                />
-                <span className="text-xl text-main-third">Pełen etat</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-center mr-5 mb-4 xl:mb-0">
-              <button className="w-[250px] bg-red-500 h-[60px] text-white rounded-xl font-bold text-2xl">
-                Usuń aplikację
-              </button>
-
-              <button className="w-[250px] bg-green-500 h-[60px] text-white rounded-xl font-bold text-2xl mt-5">
-                Dodaj do ulubionych
-              </button>
-            </div>
-          </article>
+                <div className="mt-1 flex items-center">
+                  <FontAwesomeIcon
+                    icon={faGraduationCap}
+                    className="text-lg text-gray-600"
+                  />
+                  <h2 className="text-lg text-gray-600 ml-2">
+                    {item.jobOfert.positionLevel}
+                  </h2>
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      </section>
-
-      <footer className="w-full bg-main-second h-[100px] mt-32 text-white flex justify-center flex-col px-8">
-        <h2 className="text-xl">Kacper Piaskowy</h2>
-        <h3>All rights reserved</h3>
-      </footer>
-    </>
+      </div>
+    </section>
   );
 };
 
